@@ -35,6 +35,7 @@ flowchart TB
     class C,P,D decision
     class J,K event
 ```
+![System Architecture & Connection State Flow](_mermaid/Architecture.jpeg)
 
 ---
 
@@ -72,22 +73,19 @@ sequenceDiagram
     Handler->>Reader: connect() to saved reader
     Handler-->>App: CONNECTED
 ```
+![Connection & Lifecycle Sequence](_mermaid/lifecycle.jpeg)
 
 ---
 
 ## 3. UI Screenshots & Visual Interface
 
-### RFID Inventory Scanner Screen
-The scanner UI provides real-time connection status, unique tag counts, total reads, EPC filter search bar, and inventory start/stop controls.
-![RFID Scanner](../screenshots/scanner_screen.png)
+- **RFID Inventory Scanner:** real-time connection status, unique tag counts, total reads, EPC filter search bar, and inventory start/stop controls.
+- **Gemini AI Assistant:** preset prompt chips for Zebra RFID SDK code snippets and inventory analysis.
+- **Gemini AI Code Response:** Gemini 3.8 AI generated code explanation with local caching (`⚡ Cached`) and force-refresh support.
 
-### Gemini AI Assistant Screen
-The AI assistant tab features preset prompt chips for Zebra RFID SDK code snippets and inventory analysis.
-![Gemini AI Screen](../screenshots/ai_screen.png)
-
-### Gemini AI Code Response
-Gemini 3.8 AI generated code explanation with local caching (`⚡ Cached`) and force-refresh support.
-![Gemini Response](../screenshots/ai_response.png)
+![RFID Inventory Scanner](../../docs/screenshots/scanner_screen.png)
+![Gemini AI Assistant](../../docs/screenshots/ai_screen.png)
+![Gemini AI Response](../../docs/screenshots/ai_response.png)
 
 ---
 

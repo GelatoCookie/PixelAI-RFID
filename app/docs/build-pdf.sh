@@ -32,13 +32,21 @@ build_pdf() {
     elif [[ "$source" == *"run"* ]]; then
         metadata="app/docs/run-meta.yaml"
     elif [[ "$source" == *"design"* ]]; then
-        metadata="app/docs/readme-meta.yaml"
+        metadata="app/docs/design-meta.yaml"
+    fi
+
+    local filter=""
+    if [[ "$source" == *"design"* ]]; then
+        filter="--lua-filter=app/docs/design-filter.lua"
+    elif [[ "$source" == *"lifecycle"* ]]; then
+        filter="--lua-filter=app/docs/mermaid-filter.lua"
     fi
 
     pandoc "$source" \
         --metadata-file="$metadata" \
         --template=app/docs/appnote-template.latex \
-        $([[ "$source" == *"lifecycle"* || "$source" == *"design"* ]] && echo '--lua-filter=app/docs/mermaid-filter.lua') \
+        $filter \
+        --resource-path="$(dirname "$source")" \
         --pdf-engine=tectonic \
         --toc --toc-depth=2 \
         -o "$output"

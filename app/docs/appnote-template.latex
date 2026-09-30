@@ -48,6 +48,10 @@
   \fi
 }
 \makeatother
+% Keep figures next to the text that introduces them.
+\usepackage{float}
+\floatplacement{figure}{H}
+\usepackage[font={small,sf},labelfont={bf,color=headgreen},textfont={color=captiongray},justification=centering,skip=6pt]{caption}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc}
 \usepackage{etoolbox}
@@ -69,14 +73,16 @@
 % --- Code highlighting macros (injected by pandoc) ---------------------------
 $if(highlighting-macros)$
 $highlighting-macros$
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 $endif$
 % Give code samples a quiet callout treatment that survives PDF conversion.
 \definecolor{shadecolor}{HTML}{F4F7F6}
 \definecolor{codeedge}{HTML}{B8D8D0}
 \usepackage{framed}
 \renewenvironment{Shaded}{%
-  \def\FrameCommand{\fcolorbox{codeedge}{shadecolor}}%
-  \MakeFramed{\advance\hsize-\width\FrameRestore\small\setlength{\fboxsep}{7pt}}%
+  \def\FrameCommand{\setlength{\fboxsep}{7pt}\fcolorbox{codeedge}{shadecolor}}%
+  \MakeFramed{\advance\hsize-\width\FrameRestore\footnotesize\setlength{\parskip}{0pt}}%
 }{\endMakeFramed}
 
 % --- Section styling ---------------------------------------------------------
@@ -112,6 +118,8 @@ $endif$
 
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.6em}
+% Lets TeX loosen a line rather than push unbreakable code tokens into the margin.
+\setlength{\emergencystretch}{3em}
 
 \begin{document}
 
@@ -119,22 +127,22 @@ $endif$
 \begin{titlepage}
 \thispagestyle{empty}
 \AddToShipoutPictureBG*{%
-  \AtPageUpperLeft{\color{brandgreen}\rule[-9.4cm]{\paperwidth}{9.4cm}}}
+  \AtPageUpperLeft{\color{brandgreen}\rule[-11cm]{\paperwidth}{11cm}}}
 \vspace*{2.1cm}
 {\sffamily\bfseries\color{eyebrow}\fontsize{11}{13}\selectfont
   \MakeUppercase{$if(eyebrow)$$eyebrow$$else$Application Note$endif$}\par}
 \vspace{0.9cm}
 {\sffamily\bfseries\color{white}\fontsize{31}{35}\selectfont $title$\par}
 $if(subtitle)$
-\vspace{1.1cm}
+\vspace{0.7cm}
 {\sffamily\color{bandsub}\fontsize{13}{16}\selectfont $subtitle$\par}
 $endif$
 \vfill
 {\sffamily\small
 \begin{tabular}{@{}p{2.8cm}l@{}}
-{\color{brandgreen}\bfseries AUTHOR} & $author$\\[6pt]
-{\color{brandgreen}\bfseries DATE} & $date$\\[6pt]
-{\color{brandgreen}\bfseries REFERENCE} & $reference$\\
+\textcolor{brandgreen}{\bfseries AUTHOR} & $author$\\[6pt]
+\textcolor{brandgreen}{\bfseries DATE} & $date$\\[6pt]
+\textcolor{brandgreen}{\bfseries REFERENCE} & $reference$\\
 \end{tabular}}
 \vspace{0.8cm}
 
