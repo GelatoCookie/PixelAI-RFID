@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "458421305366",
+    "project_id": "com-zebra-rfid-ai-50cb0",
+    "storage_bucket": "com-zebra-rfid-ai-50cb0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458421305366:android:d56fddad96be460ca7b537",
+        "android_client_info": {
+          "package_name": "com.zebra.rfid.ai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK38tk31J6zm3oPEIKELBeCtiGcpJ7TWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

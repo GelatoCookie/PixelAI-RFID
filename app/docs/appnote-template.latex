@@ -1,0 +1,160 @@
+% Pandoc XeLaTeX template — reproduces the "RFID ECRT Application Note" look
+% used by AppNoteSN-Date.pdf (green title banner, teal headings, gray code boxes,
+% running header/footer). Build with: pandoc --pdf-engine=xelatex --template=this
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,top=1in,bottom=1in,left=1in,right=1in,%
+  headheight=15pt,headsep=18pt,footskip=28pt]{geometry}
+
+% --- Fonts (match reference: Latin Modern + Menlo) ---------------------------
+\usepackage{fontspec}
+\usepackage{microtype}
+\setmainfont{lmroman10-regular.otf}[
+  BoldFont       = lmroman10-bold.otf,
+  ItalicFont     = lmroman10-italic.otf,
+  BoldItalicFont = lmroman10-bolditalic.otf]
+\setsansfont{lmsans10-regular.otf}[
+  BoldFont     = lmsans10-bold.otf,
+  ItalicFont   = lmsans10-oblique.otf,
+  BoldItalicFont = lmsans10-boldoblique.otf]
+\setmonofont{Menlo}[Scale=0.9]
+
+% --- Colors ------------------------------------------------------------------
+\usepackage{xcolor}
+\definecolor{brandgreen}{HTML}{15463B} % title banner
+\definecolor{headgreen}{HTML}{1F7A6B}  % section headings / rules
+\definecolor{subgreen}{HTML}{2E9E86}   % subsection headings
+\definecolor{eyebrow}{HTML}{7FB8AC}    % banner eyebrow text
+\definecolor{bandsub}{HTML}{CBE3DC}    % banner subtitle text
+\definecolor{rulegray}{HTML}{9A9A9A}   % header/footer rules + text
+\definecolor{captiongray}{HTML}{6E6E6E}
+
+% --- Graphics / tables / lists (pandoc essentials) ---------------------------
+\usepackage{graphicx}
+\usepackage[export]{adjustbox} % provides the "max width" key for rendered diagrams
+% Pandoc's LaTeX writer wraps every Markdown image in \pandocbounded{...} (to
+% scale it to fit the text width/height). The stock definition is normally
+% supplied by pandoc's own default template, which this custom template does
+% not inherit from, so provide it here for plain ![]() images (e.g. image.png).
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{%
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{0.62\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi
+}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{calc}
+\usepackage{etoolbox}
+\usepackage{seqsplit}
+% Let long monospaced tokens (e.g. method names) break inside table cells only,
+% so wide code strings wrap instead of overflowing the column.
+\let\origtexttt\texttt
+\newcommand{\wraptt}[1]{\origtexttt{\seqsplit{#1}}}
+\AtBeginEnvironment{longtable}{\let\texttt\wraptt}
+% pandoc emits captionless longtables that set \LTcaptype to "none"; provide a
+% throwaway counter so longtable's \refstepcounter{none} is valid.
+\makeatletter
+\@ifundefined{c@none}{\newcounter{none}}{}
+\makeatother
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\passthrough}[1]{#1}
+
+% --- Code highlighting macros (injected by pandoc) ---------------------------
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+% Give code samples a quiet callout treatment that survives PDF conversion.
+\definecolor{shadecolor}{HTML}{F4F7F6}
+\definecolor{codeedge}{HTML}{B8D8D0}
+\usepackage{framed}
+\renewenvironment{Shaded}{%
+  \def\FrameCommand{\fcolorbox{codeedge}{shadecolor}}%
+  \MakeFramed{\advance\hsize-\width\FrameRestore\small\setlength{\fboxsep}{7pt}}%
+}{\endMakeFramed}
+
+% --- Section styling ---------------------------------------------------------
+\usepackage{titlesec}
+\setcounter{secnumdepth}{-1} % headings carry their own literal numbers
+\titleformat{\section}
+  {\sffamily\bfseries\color{headgreen}\Large}{}{0em}{}
+\titleformat{\subsection}
+  {\sffamily\bfseries\color{headgreen}\Large}{}{0em}{}%
+  [{\vspace{2pt}\color{headgreen!45}\titlerule[0.8pt]}]
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\color{subgreen}\large}{}{0em}{}
+\titlespacing*{\section}{0pt}{1.6em}{0.7em}
+\titlespacing*{\subsection}{0pt}{1.5em}{0.6em}
+\titlespacing*{\subsubsection}{0pt}{1.1em}{0.4em}
+
+% --- Running header / footer -------------------------------------------------
+\usepackage{fancyhdr}
+\usepackage{eso-pic}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[L]{\small\color{rulegray}$if(runningtitle)$$runningtitle$$else$$title$$endif$}
+\fancyhead[R]{\small\color{rulegray}$reference$}
+\fancyfoot[L]{\small\color{rulegray}$if(footer)$$footer$$else$Application Note$endif$}
+\fancyfoot[R]{\small\color{rulegray}\thepage}
+
+% --- Hyperlinks --------------------------------------------------------------
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=headgreen,urlcolor=headgreen,%
+  citecolor=headgreen,pdftitle={$title$},pdfauthor={$author$}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+
+\begin{document}
+
+% ===================== Title page ===========================================
+\begin{titlepage}
+\thispagestyle{empty}
+\AddToShipoutPictureBG*{%
+  \AtPageUpperLeft{\color{brandgreen}\rule[-9.4cm]{\paperwidth}{9.4cm}}}
+\vspace*{2.1cm}
+{\sffamily\bfseries\color{eyebrow}\fontsize{11}{13}\selectfont
+  \MakeUppercase{$if(eyebrow)$$eyebrow$$else$Application Note$endif$}\par}
+\vspace{0.9cm}
+{\sffamily\bfseries\color{white}\fontsize{31}{35}\selectfont $title$\par}
+$if(subtitle)$
+\vspace{1.1cm}
+{\sffamily\color{bandsub}\fontsize{13}{16}\selectfont $subtitle$\par}
+$endif$
+\vfill
+{\sffamily\small
+\begin{tabular}{@{}p{2.8cm}l@{}}
+{\color{brandgreen}\bfseries AUTHOR} & $author$\\[6pt]
+{\color{brandgreen}\bfseries DATE} & $date$\\[6pt]
+{\color{brandgreen}\bfseries REFERENCE} & $reference$\\
+\end{tabular}}
+\vspace{0.8cm}
+
+{\color{rulegray}\rule{\linewidth}{0.4pt}}
+\vspace{0.3cm}
+
+$if(caption)${\small\itshape\color{captiongray}$caption$\par}$endif$
+\vspace{1.2cm}
+\end{titlepage}
+
+% ===================== Contents =============================================
+$if(toc)$
+\clearpage
+\renewcommand{\contentsname}{Contents}
+\setcounter{tocdepth}{$if(toc-depth)$$toc-depth$$else$2$endif$}
+\tableofcontents
+\clearpage
+$endif$
+
+% ===================== Body =================================================
+$body$
+
+\end{document}

@@ -1,0 +1,52 @@
+\usepackage[a4paper,margin=25mm,headheight=15pt]{geometry}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\definecolor{Ink}{HTML}{142B3A}
+\definecolor{Teal}{HTML}{00A6A6}
+\definecolor{Sky}{HTML}{EAF5F6}
+\definecolor{Slate}{HTML}{5C6B73}
+\definecolor{CodeBg}{HTML}{F3F6F7}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{Ink}}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\large\bfseries\color{Ink}}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{Teal}}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\section}{0pt}{2.2em}{0.8em}
+\titlespacing*{\subsection}{0pt}{1.6em}{0.5em}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{Slate}\textsf{123RFID Mobile}}
+\fancyhead[R]{\small\color{Teal}\textsf{SPR-56183}}
+\fancyfoot[L]{\small\color{Slate}\textsf{Zebra RFID SDK Sample}}
+\fancyfoot[R]{\small\color{Slate}\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\usepackage{setspace}
+\setstretch{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em,itemsep=0.2em,topsep=0.2em}
+\usepackage{framed}
+\colorlet{shadecolor}{CodeBg}
+\renewenvironment{Shaded}{\begin{snugshade}\small\setlength{\fboxsep}{8pt}}{\end{snugshade}}
+\usepackage{tikz}
+\makeatletter
+\providecommand{\subtitle}[1]{\gdef\@subtitle{#1}}
+\providecommand{\@subtitle}{}
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+  \thispagestyle{empty}
+  \begin{tikzpicture}[remember picture,overlay]
+    \fill[Ink] (current page.south west) rectangle (current page.north east);
+    \fill[Teal] (current page.north west) -- ([xshift=9cm]current page.north west) -- ([xshift=4cm,yshift=-5cm]current page.north west) -- (current page.north west);
+    \draw[Teal,line width=3pt] ([xshift=2.5cm,yshift=4.2cm]current page.south west) -- ([xshift=15cm,yshift=4.2cm]current page.south west);
+    \node[anchor=north west,text=white,font=\sffamily\bfseries\Large] at ([xshift=2.5cm,yshift=-2.5cm]current page.north west) {RFID ECRT APPLICATION NOTE};
+    \node[anchor=west,text=white,font=\sffamily\bfseries\fontsize{28}{34}\selectfont,align=left,text width=14cm] at ([xshift=2.5cm,yshift=1.2cm]current page.west) {\@title};
+    \node[anchor=west,text=Sky,font=\sffamily\large,align=left,text width=13cm] at ([xshift=2.5cm,yshift=-0.8cm]current page.west) {\@subtitle};
+    \node[anchor=south west,text=white,font=\sffamily\small,align=left] at ([xshift=2.5cm,yshift=5.1cm]current page.south west) {AUTHOR\\\@author\\[0.7em]DATE\\\@date\\[0.7em]REFERENCE\\SPR-56183};
+    \node[anchor=south east,text=Sky,font=\sffamily\small] at ([xshift=-2.5cm,yshift=1.2cm]current page.south east) {123RFID Mobile};
+  \end{tikzpicture}
+  \end{titlepage}
+}
+\makeatother
