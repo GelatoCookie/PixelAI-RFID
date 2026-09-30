@@ -80,10 +80,15 @@ $endif$
 \definecolor{shadecolor}{HTML}{F4F7F6}
 \definecolor{codeedge}{HTML}{B8D8D0}
 \usepackage{framed}
+\makeatletter
+\newlength\shadedindent
+% Inside lists, shift the box to the item indent and drop that indent from the code itself.
 \renewenvironment{Shaded}{%
-  \def\FrameCommand{\setlength{\fboxsep}{7pt}\fcolorbox{codeedge}{shadecolor}}%
-  \MakeFramed{\advance\hsize-\width\FrameRestore\footnotesize\setlength{\parskip}{0pt}}%
+  \setlength\shadedindent{\@totalleftmargin}%
+  \def\FrameCommand{\hskip\shadedindent\setlength{\fboxsep}{7pt}\fcolorbox{codeedge}{shadecolor}}%
+  \MakeFramed{\advance\hsize-\width\FrameRestore\@totalleftmargin\z@\footnotesize\setlength{\parskip}{0pt}}%
 }{\endMakeFramed}
+\makeatother
 
 % --- Section styling ---------------------------------------------------------
 \usepackage{titlesec}
@@ -132,10 +137,10 @@ $endif$
 {\sffamily\bfseries\color{eyebrow}\fontsize{11}{13}\selectfont
   \MakeUppercase{$if(eyebrow)$$eyebrow$$else$Application Note$endif$}\par}
 \vspace{0.9cm}
-{\sffamily\bfseries\color{white}\fontsize{31}{35}\selectfont $title$\par}
+{\sffamily\bfseries\color{white}\fontsize{31}{35}\selectfont\raggedright $title$\par}
 $if(subtitle)$
 \vspace{0.7cm}
-{\sffamily\color{bandsub}\fontsize{13}{16}\selectfont $subtitle$\par}
+{\sffamily\color{bandsub}\fontsize{13}{16}\selectfont\raggedright $subtitle$\par}
 $endif$
 \vfill
 {\sffamily\small

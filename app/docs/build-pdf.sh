@@ -36,8 +36,8 @@ build_pdf() {
     fi
 
     local filter=""
-    if [[ "$source" == *"design"* ]]; then
-        filter="--lua-filter=app/docs/design-filter.lua"
+    if [[ "$source" == *"design"* || "$source" == "README.md" ]]; then
+        filter="--lua-filter=app/docs/appnote-filter.lua"
     elif [[ "$source" == *"lifecycle"* ]]; then
         filter="--lua-filter=app/docs/mermaid-filter.lua"
     fi
