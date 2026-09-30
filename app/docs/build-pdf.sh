@@ -31,12 +31,14 @@ build_pdf() {
         metadata="app/docs/bt-meta.yaml"
     elif [[ "$source" == *"run"* ]]; then
         metadata="app/docs/run-meta.yaml"
+    elif [[ "$source" == *"design"* ]]; then
+        metadata="app/docs/readme-meta.yaml"
     fi
 
     pandoc "$source" \
         --metadata-file="$metadata" \
         --template=app/docs/appnote-template.latex \
-        $([[ "$source" == *"lifecycle"* ]] && echo '--lua-filter=app/docs/mermaid-filter.lua') \
+        $([[ "$source" == *"lifecycle"* || "$source" == *"design"* ]] && echo '--lua-filter=app/docs/mermaid-filter.lua') \
         --pdf-engine=tectonic \
         --toc --toc-depth=2 \
         -o "$output"
