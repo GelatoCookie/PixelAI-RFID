@@ -24,7 +24,7 @@ class ToneFeedback {
 
     /** Ascending two-beep sound when connected. */
     fun playConnected() {
-        playTwoTone(ToneGenerator.TONE_CDMA_CALLDROP_LITE, ToneGenerator.TONE_SUP_INTERCEPT_ABBREV)
+        playTwoTone(ToneGenerator.TONE_CDMA_ANSWER, ToneGenerator.TONE_SUP_INTERCEPT_ABBREV)
     }
 
     /** Descending two-beep sound when disconnected. */

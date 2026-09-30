@@ -91,7 +91,7 @@ class RfidHandler(context: Context) : Readers.RFIDReaderEventHandler {
         this.inventoryListener = inventoryListener
         active = true
         try {
-            IRFIDLogger.getLogger("AI-RFID").EnableDebugLogs(false)
+            IRFIDLogger.getLogger("AI-RFID").EnableDebugLogs(true)
         } catch (e: Exception) {
             Log.w(TAG, "Failed to disable debug logs: ${e.message}")
         }
@@ -457,6 +457,10 @@ class RfidHandler(context: Context) : Readers.RFIDReaderEventHandler {
             if (type == STATUS_EVENT_TYPE.HANDHELD_TRIGGER_EVENT) {
                 val trigger = rfidStatusEvents.StatusEventData.HandheldTriggerEventData.handheldEvent
                 if (trigger == HANDHELD_TRIGGER_EVENT_TYPE.HANDHELD_TRIGGER_PRESSED) {
+                    if(isReading()) {
+                        Log.d(TAG, "Ignoring trigger event while reading")
+                        return
+                    }
                     inventoryListener?.onTriggerChanged(true)
                     performInventory()
                 } else if (trigger == HANDHELD_TRIGGER_EVENT_TYPE.HANDHELD_TRIGGER_RELEASED) {
@@ -464,6 +468,7 @@ class RfidHandler(context: Context) : Readers.RFIDReaderEventHandler {
                     stopInventory()
                 }
             } else if (type == STATUS_EVENT_TYPE.DISCONNECTION_EVENT) {
+                Log.d(TAG, "Reader disconnected, To Do: Handle Bluetooth Inverface Auto-Reconnect")
                 executeOnExecutor { handleDisconnect() }
             } else if (type == STATUS_EVENT_TYPE.INVENTORY_START_EVENT) {
                 reading = true

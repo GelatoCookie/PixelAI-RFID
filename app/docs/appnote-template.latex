@@ -40,7 +40,7 @@
 \newsavebox\pandoc@box
 \newcommand*\pandocbounded[1]{%
   \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{0.62\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempa{0.75\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
   \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
   \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi
   \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
@@ -50,6 +50,7 @@
 \makeatother
 % Keep figures next to the text that introduces them.
 \usepackage{float}
+\usepackage{needspace}
 \floatplacement{figure}{H}
 \usepackage[font={small,sf},labelfont={bf,color=headgreen},textfont={color=captiongray},justification=centering,skip=6pt]{caption}
 \usepackage{longtable,booktabs,array}
