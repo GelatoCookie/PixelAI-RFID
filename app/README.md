@@ -8,7 +8,7 @@ An Android application demonstrating production-ready integration with the **Zeb
 
 | RFID Inventory Scanner | Gemini AI Code Assistant | Gemini AI Code Response |
 | :---: | :---: | :---: |
-| ![RFID Scanner](docs/screenshots/scanner_screen.png) | ![Gemini AI Screen](docs/screenshots/ai_screen.png) | ![Gemini Response](docs/screenshots/ai_response.png) |
+| ![RFID Scanner](../docs/screenshots/scanner_screen.png) | ![Gemini AI Screen](../docs/screenshots/ai_screen.png) | ![Gemini Response](../docs/screenshots/ai_response.png) |
 
 ---
 
