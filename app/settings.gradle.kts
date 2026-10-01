@@ -22,5 +22,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AI-RFID"
-include(":app")
+rootProject.name = "app"

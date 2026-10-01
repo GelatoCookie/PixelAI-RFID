@@ -48,8 +48,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.ClipEntry
-import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -63,7 +63,7 @@ fun RfidAiScreen(
 ) {
     val aiState by aiViewModel.uiState.collectAsState()
     val rfidState by rfidViewModel.uiState.collectAsState()
-    val clipboard = LocalClipboard.current
+    val clipboardManager = LocalClipboardManager.current
     val coroutineScope = rememberCoroutineScope()
 
     var customPrompt by rememberSaveable { mutableStateOf("") }
@@ -309,13 +309,7 @@ fun RfidAiScreen(
 
                                 IconButton(
                                     onClick = {
-                                        coroutineScope.launch {
-                                            clipboard.setClipEntry(
-                                                ClipEntry(
-                                                    ClipData.newPlainText("Gemini Response", state.responseText)
-                                                )
-                                            )
-                                        }
+                                        clipboardManager.setText(AnnotatedString(state.responseText))
                                     },
                                     modifier = Modifier.size(28.dp)
                                 ) {
